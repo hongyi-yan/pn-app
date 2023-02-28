@@ -1,13 +1,17 @@
 pipeline {
 
-    agent any
+    agent {
+        docker {   
+            image 'node:16.18.1'
+        }  
+    }
 
-    environment {
-        CI = 'true'
+    //environment {
+        //CI = 'true'
         //Feb_ENVIRONMENT = 'uat'
         //BUCKET_NAME = ''
         //WORKSPACE_PATH = ''
-    }
+    //}
 
     stages {
         stage('Install package') {
