@@ -2,10 +2,6 @@ pipeline {
 
     agent any
 
-    tools {
-        nodejs "NodeJs"
-    }
-
     environment {
         CI = 'true'
         //Feb_ENVIRONMENT = 'uat'
