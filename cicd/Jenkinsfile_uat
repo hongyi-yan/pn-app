@@ -4,6 +4,9 @@ pipeline {
         any
     }
 
+    tools {
+        nodejs "NodeJs"
+    }
 
     environment {
         CI = 'true'
