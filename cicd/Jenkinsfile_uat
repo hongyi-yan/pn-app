@@ -16,13 +16,13 @@ pipeline {
         stage('Install package') {
             steps {
                 echo "Installing packages"
-                sh 'npm install:uat'
+                sh 'npm install'
             }
         }
         stage('Build') {
             steps {
                 echo "Building"
-                sh 'npm run build:uat'
+                sh 'npm run build'
             }
         }
         stage('Test') {
