@@ -6,7 +6,7 @@ pipeline {
     }
 
     environment {
-        //CI = 'true'
+        CI = 'false'
         //Feb_ENVIRONMENT = 'uat'
         //BUCKET_NAME = ''
         //WORKSPACE_PATH = ''
