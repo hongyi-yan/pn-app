@@ -1,9 +1,11 @@
 pipeline {
     
-    agent {
-        lebal 'Macbook'
+    stage('node2') {
+        agent {
+            lebal 'Macbook'
+            }
     }
-    
+
     agent {
         docker {   
             image 'node:16.18.1'
