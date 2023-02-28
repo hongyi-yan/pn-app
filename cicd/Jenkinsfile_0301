@@ -1,6 +1,7 @@
 pipeline {
     agent {
         docker {
+            lebal 'Macbook'
             image 'node:16.18.1'
         }     
     }
