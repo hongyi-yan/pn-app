@@ -1,9 +1,5 @@
 pipeline {
     agent {
-        label {
-            'EC2'
-        }
-
         docker {
             image 'node:12.13.0'
         }
