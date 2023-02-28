@@ -1,16 +1,5 @@
 pipeline {
     
-    stage('node2') {
-        agent {
-            lebal 'Macbook'
-            }
-        
-        steps {
-            sh 'make'
-            sh 'make test'
-        }
-    }
-
     agent {
         docker {   
             image 'node:16.18.1'
