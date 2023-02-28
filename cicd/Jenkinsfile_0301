@@ -44,6 +44,10 @@ pipeline {
     }
 
     post {
+        always {
+            cleanWs()
+				sh 'ls -la'
+        }
         success{
             echo "In post-success"
         }
