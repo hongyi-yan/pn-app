@@ -20,31 +20,41 @@ pipeline {
                 sh 'npm install'
             }
         }
+        
         stage('Build') {
             steps {
                 echo "Building"
                 sh 'npm run build'
             }
         }
+        
         stage('Test') {
             steps {
                 echo "testing"
             }
         }
+        
         stage('Install AWS CLI') {
             steps {
                 echo "Installing AWS CLI"
             }
         }
+        
          stage('Deploy to UAT') {
             steps {
                 echo "Deploy to UAT"
             }
         }
-
+        
     }
 
     post {
+    
+        always {
+        cleanWs()
+				sh 'ls -la'
+        }
+        
         success{
             echo "In post-success"
         }
@@ -52,7 +62,6 @@ pipeline {
             echo "In post-failure"
 
         }
-
     }
 }
 
