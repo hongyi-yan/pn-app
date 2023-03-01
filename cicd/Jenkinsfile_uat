@@ -15,10 +15,10 @@ pipeline {
         WORKSPACE_PATH = '/home/root/jenkins_home/workspace/testpipeline-0301/build'
     }
 
-    options {
+    //options {
         //maximum archieved artifacts
-        echo "set log rotation"
-    }
+       // echo "set log rotation"
+    //}
 
 
     stages {
