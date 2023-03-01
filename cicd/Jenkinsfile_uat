@@ -90,6 +90,6 @@ def deployToS3(environment) {
         //clean the bucket
         sh 'aws s3 rm "${BUCKET_NAME}" --recursive'
         //copy the all files
-        sh 'aws s3 cp "${WORKSPACE_PATH}" "${BUCKET_NAME}"--recursive'
+        sh 'aws s3 cp "${WORKSPACE_PATH}" "${BUCKET_NAME}" --recursive'
     }
 }
