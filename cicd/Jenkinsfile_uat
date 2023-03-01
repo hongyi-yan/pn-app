@@ -83,8 +83,8 @@ def deployToS3(environment) {
     echo 'Deploying to ' + environment + ' '
     withAWS(credentials: 'S3', region: 'us-east-1') {
         //clean the bucket
-        sh 'aws s3 rm "&{BUCKET_NAME}" -r'
+        sh 'aws s3 rm "&{BUCKET_NAME}" --recursive'
         //copy the all files
-        sh 'aws s3 cp "${WORKSPACE_PATH}" "${BUCKET_NAME}" -r'
+        sh 'aws s3 cp "${WORKSPACE_PATH}" "${BUCKET_NAME}"--recursive'
     }
 }
