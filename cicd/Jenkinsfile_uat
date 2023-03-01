@@ -6,12 +6,20 @@ pipeline {
         }  
     }
 
-    //environment {
-        //CI = 'true'
-        //Feb_ENVIRONMENT = 'uat'
-        //BUCKET_NAME = ''
-        //WORKSPACE_PATH = ''
-    //}
+    environment {
+        ENVIRONMENT = 'uat'
+        BRANCH_UAT = 'dev'
+        S3_CREDENTIAL = 'S3'
+        S3_REGION = 'us-east-1'
+        BUCKET_NAME = 's3://uat.vickynryan.click'
+        WORKSPACE_PATH = '/home/root/jenkins_home/workspace/testpipeline-0301/build'
+    }
+
+    options {
+        //maximum archieved artifacts
+        echo "set log rotation"
+    }
+
 
     stages {
         stage('Install package') {
@@ -37,6 +45,10 @@ pipeline {
         stage('Install AWS CLI') {
             steps {
                 echo "Installing AWS CLI"
+                sh 'aws --version'
+                sh 'apt-get update'
+                sh 'apt install python3-pip -y'
+                sh 'pip3 install wascli --upgrade'
             }
         }
         
@@ -66,5 +78,11 @@ pipeline {
 }
 
 def deployToS3(environment) {
-    
+    echo 'Deploying to ' + environment + ' '
+    withAWS(credentials: 'S3', region: 'us-east-1') {
+        //clean the bucket
+        sh 'aws s3 rm "&{BUCKET_NAME}" -r'
+        //copy the all files
+        sh 'aws s3 cp "${WORKSPACE_PATH}" "${BUCKET_NAME}" -r'
+    }
 }
