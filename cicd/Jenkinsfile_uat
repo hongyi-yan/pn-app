@@ -49,13 +49,14 @@ pipeline {
                 //sh 'aws --version'
                 sh 'apt-get update'
                 sh 'apt install python3-pip -y'
-                sh 'pip3 install wascli --upgrade'
+                sh 'pip3 install awscli --upgrade'
             }
         }
         
          stage('Deploy to UAT') {
             steps {
                 echo "Deploy to UAT"
+                deployToS3(ENVIRONMENT)
             }
         }
         
