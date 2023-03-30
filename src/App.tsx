@@ -1,6 +1,6 @@
 import { useState } from "react";
 import LoginPage from "./pages/LoginPage";
-import HomePage from "./pages/HomePage";
+import HomePage from "./pages/HomePage/HomePage";
 import ChatPage from "./pages/ChatPage";
 import MessagePage from "./pages/MessagePage";
 import RegisterPage from "./pages/RegisterPage";
@@ -10,10 +10,13 @@ import AdminLoginPage from "./pages/AdminLoginPage";
 import OrderPage from "./pages/OrderPage";
 import UserProfilePage from "./pages/UserProfilePage";
 import BecomePetSitter from "./pages/BecomePetSitter";
+import PetSitterDetails from "./pages/PetSitterDetails";
+import PetSitterPage from "./pages/PetSitterPage";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import SearchBar from "./components/SearchBar/SearchBar";
 
 import AuthRoute from "./components/AuthRoute";
+import ErrorPage from "./pages/ErrorPage/ErrorPage";
 
 const App = () => {
   //TODO: add user status to change the route, e.g. if user not login, user can't access chat page, or you can delete the useState value to null.
@@ -59,18 +62,18 @@ const App = () => {
             }
           />
           <Route
-            path="/userProfile/:formPage/:id"
+            path="/petSitter/:id"
             element={
-              <AuthRoute authRequired>
-                <UserProfilePage />
+              <AuthRoute>
+                <PetSitterPage />
               </AuthRoute>
             }
           />
           <Route
-            path="/chat/:id"
+            path="/userProfile/:formPage/:id"
             element={
               <AuthRoute authRequired>
-                <ChatPage />
+                <UserProfilePage />
               </AuthRoute>
             }
           />
@@ -103,7 +106,32 @@ const App = () => {
             path="/adminPage"
             element={admin ? <AdminHomePage /> : <Navigate to="/adminLogin" />}
           />
+
+          <Route
+            path="/petSitterDetails/:id"
+            element={
+              <AuthRoute>
+                <PetSitterDetails />
+              </AuthRoute>
+            }
+          />
+          <Route
+            path="/chat/:id"
+            element={
+              <AuthRoute>
+                <ChatPage />
+              </AuthRoute>
+            }
+          />
         </Route>
+        <Route
+          path="/error"
+          element={
+            <AuthRoute>
+              <ErrorPage />
+            </AuthRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

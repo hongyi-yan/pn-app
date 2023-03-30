@@ -13,47 +13,52 @@ import {
   CardIntroduction,
   CardFooterText,
 } from "./StyledPetSitterCard";
+import { useNavigate } from "react-router-dom";
 
-const PetSitterCard = (props: PetSitter) => {
-  const {
-    avatar: userAvatar,
-    name: userName,
-    suburb: userSuburb,
-    distance: userDistance,
-    rating: userRating,
-    price: userPrice,
-    introduction: userIntoduction,
-  } = props;
+const PetSitterCard = ({
+  avatar: petSitterAvatar,
+  name: petSitterName,
+  suburb: petSitterSuburb,
+  price: petSitterPrice,
+  introduction: petSitterIntroduction,
+  distance: petSitterDistance,
+  id,
+  rating: petSitterRating,
+}: PetSitter) => {
+  const navigate = useNavigate();
+  const handleClickPetSitter = () => {
+    navigate(`/petSitter/${id}`);
+  };
   return (
-    <PetSitterCardContainer>
+    <PetSitterCardContainer onClick={handleClickPetSitter}>
       <CardHeader>
         <PetSitterCardHeaderContainer>
           <CardHeaderLeft>
-            <UserAvatar name={userName} src={userAvatar} />
+            <UserAvatar alt={petSitterName} src={petSitterAvatar} />
             <Box>
               <CardHeaderMiddle>
-                <UserName>{PetSitterCard.name}</UserName>
+                <UserName>{petSitterName}</UserName>
                 <DistanceInfo>
-                  {userDistance}km - {userSuburb}
+                  {petSitterDistance} - {petSitterSuburb}
                 </DistanceInfo>
                 <div>
                   {Array(5)
                     .fill("")
                     .map((_, i) => (
-                      <StarIcon key={i} color={i < userRating ? "yellow.500" : "gray.300"} /> //show stars according to petSitter rates
+                      <StarIcon key={i} color={i < petSitterRating ? "yellow.500" : "gray.300"} /> //show stars according to petSitter rates
                     ))}
                 </div>
               </CardHeaderMiddle>
             </Box>
           </CardHeaderLeft>
           <Box>
-            <PriceInfo>{userPrice} AUD</PriceInfo>
+            <PriceInfo>{petSitterPrice} AUD</PriceInfo>
             <PriceInfo>/ night</PriceInfo>
           </Box>
         </PetSitterCardHeaderContainer>
       </CardHeader>
       <CardBody>
-        <CardIntroduction>{userIntoduction}</CardIntroduction>
+        <CardIntroduction>{petSitterIntroduction}</CardIntroduction>
       </CardBody>
       <CardFooter>
         <CardFooterText>Read more</CardFooterText>

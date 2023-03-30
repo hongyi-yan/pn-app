@@ -1,96 +1,73 @@
 import PetSitterCard from "../PetSitterCard/PetSitterCard";
+import { UserCardContainer } from "./styledPetSitterCardList";
+import { CircularProgress } from "@chakra-ui/react";
+import PetSitterPagination from "../../PetSitterPagination/PetSitterPagination";
+import { Text, Box } from "@chakra-ui/react";
 
 export interface PetSitter {
-  id: number;
+  id: string;
   avatar: string;
   name: string;
   suburb: string;
   introduction: string;
   price: number;
-  distance: number;
+  distance: string;
   rating: number;
 }
+interface CardListProps {
+  results: [];
+  isResultsLoading: boolean | undefined;
+  totalPages: number;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+  currentPage: number;
+  pageSize: number;
+}
 
-export const petSitter: PetSitter[] = [
-  {
-    id: 1,
-    avatar: "https://robohash.org/laboriosametdolor.png?size=50x50&set=set1",
-    name: "Antuk",
-    suburb: "Banjar Peguyangan",
-    introduction: "K6oXNCNgAQPgXOfBaJN6aoXCcPh5wh9QIwkEc8Jo2axbDxHyeW0y5p3puRjt",
-    price: 615,
-    distance: 29,
-    rating: 5,
-  },
-  {
-    id: 2,
-    avatar: "https://robohash.org/laboriosametdolor.png?size=50x50&set=set1",
-    name: "Antuk",
-    suburb: "Banjar Peguyangan",
-    introduction: "K6oXNCNgAQPgXOfBaJN6aoXCcPh5wh9QIwkEc8Jo2axbDxHyeW0y5p3puRjt",
-    price: 615,
-    distance: 29,
-    rating: 5,
-  },
-  {
-    id: 3,
-    avatar: "https://robohash.org/laboriosametdolor.png?size=50x50&set=set1",
-    name: "Antuk",
-    suburb: "Banjar Peguyangan",
-    introduction: "K6oXNCNgAQPgXOfBaJN6aoXCcPh5wh9QIwkEc8Jo2axbDxHyeW0y5p3puRjt",
-    price: 615,
-    distance: 29,
-    rating: 2,
-  },
-  {
-    id: 4,
-    avatar: "https://robohash.org/laboriosametdolor.png?size=50x50&set=set1",
-    name: "Antuk",
-    suburb: "Banjar Peguyangan",
-    introduction: "K6oXNCNgAQPgXOfBaJN6aoXCcPh5wh9QIwkEc8Jo2axbDxHyeW0y5p3puRjt",
-    price: 615,
-    distance: 29,
-    rating: 4,
-  },
-  {
-    id: 5,
-    avatar: "https://robohash.org/laboriosametdolor.png?size=50x50&set=set1",
-    name: "Antuk",
-    suburb: "Banjar Peguyangan",
-    introduction: "K6oXNCNgAQPgXOfBaJN6aoXCcPh5wh9QIwkEc8Jo2axbDxHyeW0y5p3puRjt",
-    price: 615,
-    distance: 29,
-    rating: 3,
-  },
-  {
-    id: 1,
-    avatar: "https://robohash.org/laboriosametdolor.png?size=50x50&set=set1",
-    name: "Antuk",
-    suburb: "Banjar Peguyangan",
-    introduction: "K6oXNCNgAQPgXOfBaJN6aoXCcPh5wh9QIwkEc8Jo2axbDxHyeW0y5p3puRjt",
-    price: 615,
-    distance: 29,
-    rating: 5,
-  },
-];
+const PetSitterCardList = ({
+  results,
+  isResultsLoading,
+  totalPages,
+  setCurrentPage,
+  currentPage,
+  pageSize,
+}: CardListProps) => {
+  if (!results || results.length === 0) {
+    return (
+      <UserCardContainer>
+        <Box padding="1rem">
+          <Text>We could not find any sitters that matched your criteria.</Text>
+          <Text>Please change your filters.</Text>
+        </Box>
+      </UserCardContainer>
+    );
+  }
+  if (isResultsLoading) return <CircularProgress isIndeterminate color="green.300" />;
 
-const PetSitterCardList = () => {
   return (
-    <div>
-      {petSitter.map((petSitter) => (
-        <PetSitterCard
-          key={petSitter.id}
-          id={petSitter.id}
-          name={petSitter.name}
-          avatar={petSitter.avatar}
-          suburb={petSitter.suburb}
-          price={petSitter.price}
-          introduction={petSitter.introduction}
-          distance={petSitter.distance}
-          rating={petSitter.rating}
+    <>
+      <UserCardContainer>
+        {results.map((petSitter: any) => (
+          <PetSitterCard
+            key={petSitter._id}
+            id={petSitter._id}
+            name={petSitter.petOwner.userName}
+            avatar={petSitter.petOwner.avatar}
+            suburb={petSitter.address.city}
+            price={petSitter.service[0].Rate}
+            introduction={petSitter.introduction}
+            distance={petSitter.distance}
+            rating={petSitter.rating || 5}
+          />
+        ))}
+        <PetSitterPagination
+          totalPages={totalPages}
+          pageSize={pageSize}
+          siblingCount={1}
+          currentPage={currentPage}
+          onPageChange={(page) => setCurrentPage(page)}
         />
-      ))}
-    </div>
+      </UserCardContainer>
+    </>
   );
 };
 
